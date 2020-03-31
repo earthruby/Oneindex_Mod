@@ -1,3 +1,22 @@
+> 伪静态设置
+> Nginx 伪静态设置
+```
+if (!-f $request_filename){
+set $rule_0 1$rule_0;
+}
+if (!-d $request_filename){
+set $rule_0 2$rule_0;
+}
+if ($rule_0 = "21"){
+rewrite ^/(.*)$ /index.php?/$1 last;
+}
+```
+后台打开`去掉/?/ (需配合伪静态使用!!)`，保存设置
+
+> 进入宝塔定时任务设置，任务类型选择shell脚本，任务名称：OneIndex-每小时刷新一次Token ，任务周期选择每小时，0分钟，脚本内容为：php /程序具体路径/one.php token:refresh PS:具体路径为你网站根目录路径,PHP后有空格请注意。
+
+> 再添加一条定时任务，任务名称：OneIndex-每十分钟后台刷新一遍缓存,任务周期改为N分钟-10分钟，脚本内容为：php /程序具体路径/one.php cache:refresh
+
 # OneIndex
 Onedrive Directory Index
 
